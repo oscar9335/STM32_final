@@ -71,9 +71,6 @@ void Error_Handler(void);
 #define OTG_FS_PowerSwitchOn_GPIO_Port GPIOC
 #define PDM_OUT_Pin GPIO_PIN_3
 #define PDM_OUT_GPIO_Port GPIOC
-#define B1_Pin GPIO_PIN_0
-#define B1_GPIO_Port GPIOA
-#define B1_EXTI_IRQn EXTI0_IRQn
 #define I2S3_WS_Pin GPIO_PIN_4
 #define I2S3_WS_GPIO_Port GPIOA
 #define SPI1_SCK_Pin GPIO_PIN_5
@@ -86,10 +83,6 @@ void Error_Handler(void);
 #define BOOT1_GPIO_Port GPIOB
 #define CLK_IN_Pin GPIO_PIN_10
 #define CLK_IN_GPIO_Port GPIOB
-#define livingroom_in_Pin GPIO_PIN_8
-#define livingroom_in_GPIO_Port GPIOD
-#define livingroom_out_Pin GPIO_PIN_9
-#define livingroom_out_GPIO_Port GPIOD
 #define LD4_Pin GPIO_PIN_12
 #define LD4_GPIO_Port GPIOD
 #define LD3_Pin GPIO_PIN_13
@@ -116,23 +109,28 @@ void Error_Handler(void);
 #define I2S3_SCK_GPIO_Port GPIOC
 #define I2S3_SD_Pin GPIO_PIN_12
 #define I2S3_SD_GPIO_Port GPIOC
+#define livingroom_in_Pin GPIO_PIN_0
+#define livingroom_in_GPIO_Port GPIOD
+#define livingroom_in_EXTI_IRQn EXTI0_IRQn
 #define bedroom_out_Pin GPIO_PIN_1
 #define bedroom_out_GPIO_Port GPIOD
+#define bedroom_out_EXTI_IRQn EXTI1_IRQn
 #define bedroom_in_Pin GPIO_PIN_2
 #define bedroom_in_GPIO_Port GPIOD
 #define bedroom_in_EXTI_IRQn EXTI2_IRQn
-#define Audio_RST_Pin GPIO_PIN_4
-#define Audio_RST_GPIO_Port GPIOD
-#define OTG_FS_OverCurrent_Pin GPIO_PIN_5
-#define OTG_FS_OverCurrent_GPIO_Port GPIOD
+#define livingroom_out_Pin GPIO_PIN_3
+#define livingroom_out_GPIO_Port GPIOD
+#define livingroom_out_EXTI_IRQn EXTI3_IRQn
+#define room_LED_Pin GPIO_PIN_5
+#define room_LED_GPIO_Port GPIOD
+#define Livingroom_LED_Pin GPIO_PIN_6
+#define Livingroom_LED_GPIO_Port GPIOD
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
 #define Audio_SCL_Pin GPIO_PIN_6
 #define Audio_SCL_GPIO_Port GPIOB
 #define Audio_SDA_Pin GPIO_PIN_9
 #define Audio_SDA_GPIO_Port GPIOB
-#define MEMS_INT2_Pin GPIO_PIN_1
-#define MEMS_INT2_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 
