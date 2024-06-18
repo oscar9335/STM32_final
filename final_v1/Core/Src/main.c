@@ -479,29 +479,10 @@ void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin){
 	/* EXTI line interrupt detected */
 	if(__HAL_GPIO_EXTI_GET_IT(GPIO_Pin) != RESET)
 	{
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//		sprintf(MonitorTset,"Testing interrupt : %d\n\r",__HAL_GPIO_EXTI_GET_IT(GPIO_Pin));
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-
-
-//
-//		sprintf(MonitorTset,"Back to IRQhandler : %d\n\r",__HAL_GPIO_EXTI_GET_IT(GPIO_Pin));
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
 
 		__HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
 
-//		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET );
-
 		HAL_GPIO_EXTI_Callback(GPIO_Pin);
-
-//		/* Give the semaphore to unblock the handler task */
-//		BaseType_t *taskwoken;
-//		taskwoken=pdFALSE;
-//		xSemaphoreGiveFromISR(xSemaphore,&taskwoken);
-
-//		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET );
-
 
 	}
 }
@@ -515,197 +496,48 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	char MonitorTset[30];
 	memset(MonitorTset,'\0',sizeof(MonitorTset));
 
-//	if(bedroom_in == 0){
-//		bedroom_in = 1;
-//		sprintf(MonitorTset,"Leaving interrupt EXIT callback bedroom_in : %d\n\r",bedroom_in);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//	}
-//	else if(bedroom_in == 1){
-//		bedroom_in = 0;
-//		sprintf(MonitorTset,"Leaving interrupt EXIT callback bedroom_in : %d\n\r",bedroom_in);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//	}
-//
-//	if(bedroom_out == 0){
-//		bedroom_out = 1;
-//		sprintf(MonitorTset,"Leaving interrupt EXIT callback bedroom_out : %d\n\r",bedroom_out);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//	}
-//	else if(bedroom_out == 1){
-//		bedroom_out = 0;
-//		sprintf(MonitorTset,"Leaving interrupt EXIT callback bedroom_out : %d\n\r",bedroom_out);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//	}
 
-//	if(GPIO_Pin == bedroom_out_Pin){   // bedroom out
-//		bedroom_out = 1;
-//	}
-//
-//	if(GPIO_Pin = bedroom_in_Pin){
-//		bedroom_in = 1;
-//	}
-//
-//
-//	if(GPIO_Pin == livingroom_out_Pin){
-//		livingroom_out = 1;
-//
-//		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET );
-//
-//	}
-//
-//	if(GPIO_Pin = livingroom_in_Pin){
-//		livingroom_in = 1;
-//
-//		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET );
-//	}
+	if(GPIO_Pin == bedroom_in_Pin ||  GPIO_Pin == bedroom_out_Pin){
+		// state change bedroom
+		bedroom_state[0] = bedroom_state[2];
+		bedroom_state[1] = bedroom_state[3];
+		bedroom_state[2] = bedroom_out;
+		bedroom_state[3] = bedroom_in;
 
+		bedroom_in = 0;
+		bedroom_out = 0;
+	}
 
+	else{
+		// state change living room
+		livingroom_state[0] = livingroom_state[2];
+		livingroom_state[1] = livingroom_state[3];
+		livingroom_state[2] = livingroom_out;
+		livingroom_state[3] = livingroom_in;
 
-
-	// state change bedroom
-	bedroom_state[0] = bedroom_state[2];
-	bedroom_state[1] = bedroom_state[3];
-	bedroom_state[2] = bedroom_out;
-	bedroom_state[3] = bedroom_in;
-
-	bedroom_in = 0;
-	bedroom_out = 0;
-
-
-	// state change living room
-	livingroom_state[0] = livingroom_state[2];
-	livingroom_state[1] = livingroom_state[3];
-	livingroom_state[2] = livingroom_out;
-	livingroom_state[3] = livingroom_in;
-
-	livingroom_in = 0;
-	livingroom_out = 0;
-
-
-
-
-//	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
-//
-//	sprintf(MonitorTset,"Still in Callback : %d\n\r",__HAL_GPIO_EXTI_GET_IT(GPIO_Pin));
-//	HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-
-//	NVIC_SystemReset();
-//	/* Give the semaphore to unblock the handler task */
-
-//	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET );
-
-//	xSemaphoreGiveFromISR(xSemaphore,&taskwoken);
-
-
-
-//	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+		livingroom_in = 0;
+		livingroom_out = 0;
+	}
 
 }
-
-
-//void Sensor_bedroom_in ( void ){
-//	for(;;){
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//		if(HAL_GPIO_ReadPin(GPIOD,bedroom_in_Pin) == 0){
-//			if(bedroom_in == 0){
-//				bedroom_in = 1;
-//			}
-//			else if(bedroom_in == 1){
-//				bedroom_in = 0;
-//			}
-//		}
-//	}
-//}
-
-//void Sensor_bedroom_out ( void ){
-//	for(;;){
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//		if(HAL_GPIO_ReadPin(GPIOD,bedroom_out_Pin) == 0){
-//			if(bedroom_out == 0){
-//				bedroom_out = 1;
-//			}
-//			else if(bedroom_out == 1){
-//				bedroom_out = 0;
-//			}
-//		}
-//	}
-//}
-
-//void Sensor_livingroom_in ( void ){
-//	for(;;){
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//		if(HAL_GPIO_ReadPin(GPIOD,livingroom_in_Pin) == 0){
-//			if(livingroom_in == 0){
-//				livingroom_in = 1;
-//			}
-//			else if(livingroom_in == 1){
-//				livingroom_in = 0;
-//			}
-//		}
-//	}
-//}
-
-//void Sensor_livingroom_out ( void ){
-//	for(;;){
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//		if(HAL_GPIO_ReadPin(GPIOD,livingroom_out_Pin) == 0){
-//			if(livingroom_out == 0){
-//				livingroom_out = 1;
-//			}
-//			else if(livingroom_out == 1){
-//				livingroom_out = 0;
-//			}
-//		}
-//	}
-//}
-
-
-
-
 
 void LED_task ( void ){
 	xSemaphore = xSemaphoreCreateBinary();
 
 	for(;;){
-		counter_bed--;
-		counter_living--;
+		if(counter_bed > 0){
+			counter_bed--;
+		}
+		if(counter_living > 0){
+			counter_living--;
+		}
+
 		char MonitorTset[30];
 		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//		sprintf(MonitorTset,"In LED task\n\r");
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-
-		if( xSemaphore != NULL ){
-			if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10  ) == pdTRUE ){
-//				if(bedroom_in == 0){
-//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET );
-//					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_SET);
-//				}
-//				else if(bedroom_in == 1){
-//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
-//					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_RESET);
-//				}
-//
-//				if(bedroom_out == 0){
-//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET );
-//					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_SET);
-//				}
-//				else if(bedroom_out == 1){
-//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-//					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_RESET);
-//				}
 
 
-
-
+//		if( xSemaphore != NULL ){
+//			if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10  ) == pdTRUE ){
 
 				sprintf(MonitorTset,"bedroom_state %d %d %d %d\n\r",bedroom_state[0],bedroom_state[1],bedroom_state[2],bedroom_state[3]);
 				HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
@@ -731,7 +563,6 @@ void LED_task ( void ){
 						bedroom_state[i] = 0;
 					}
 				}
-
 
 				// for the living room
 				if(livingroom_state[0]== 1 && livingroom_state[1]== 0 && livingroom_state[2]== 0 && livingroom_state[3]== 1){
@@ -763,6 +594,7 @@ void LED_task ( void ){
 					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_SET);
 				}
 				else{
+					number_of_people_bedroom = 0;
 					// turn off the bedroom LED
 					HAL_GPIO_WritePin(GPIOD, room_LED_Pin, GPIO_PIN_RESET);
 				}
@@ -773,6 +605,7 @@ void LED_task ( void ){
 					HAL_GPIO_WritePin(GPIOD, Livingroom_LED_Pin, GPIO_PIN_SET);
 				}
 				else{
+					number_of_people_livingroom = 0;
 					// turn off the bedroom LED
 					HAL_GPIO_WritePin(GPIOD, Livingroom_LED_Pin, GPIO_PIN_RESET);
 				}
@@ -788,89 +621,20 @@ void LED_task ( void ){
 					}
 				}
 
+				sprintf(MonitorTset,"counter_bed, counter_living %d, %d\n\r",counter_bed,counter_living);
+				HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
+
 
 
 				sprintf(MonitorTset,"\n\r");
 				HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-			}
-		}
-
-//		// bedroom_in Green
-
-//
-//		// bedroom_out Orange
-//		if(bedroom_out == 0){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET );
+//			}
 //		}
-//		if(bedroom_out == 1){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-//		}
-//		sprintf(MonitorTset,"Read Sensor ?�bedroom_out_Pin??, bedroom_out flag : %d\n\r",bedroom_out);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//
-//		// livingroom_in Red
-//		if(livingroom_in == 0){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET );
-//		}
-//		if(livingroom_in == 1){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
-//		}
-//
-//		sprintf(MonitorTset,"Read Sensor ?�livingroom_in_Pin??, livingroom_in flag : %d\n\r",livingroom_in);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//
-//		// livingroom_out Blue
-//		if(livingroom_out == 0){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET );
-//		}
-//		else if(livingroom_out == 1){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
-////		}
-//		sprintf(MonitorTset,"In the LED Task\n\r");
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-
-
-
 
 		vTaskDelay(500);
-		xSemaphoreGive( xSemaphore );
+//		xSemaphoreGive( xSemaphore );
 	}
 }
-
-
-//void Sensor_LED( void ){
-//	for(;;){
-//		char MonitorTset[30];
-//		memset(MonitorTset,'\0',sizeof(MonitorTset));
-//
-//
-//		if(HAL_GPIO_ReadPin(GPIOD,bedroom_out_Pin) == 0){
-//			if(sensor1_flag == 0){
-//				sensor1_flag = 1;
-//			}
-//			else if(sensor1_flag == 1){
-//				sensor1_flag = 0;
-//			}
-//			sprintf(MonitorTset,"Read Sensor\n\r");
-//			HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//		}
-//
-//		if(sensor1_flag == 0){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET );
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET );
-//		}
-//		if(sensor1_flag == 1){
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET );
-//			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
-//		}
-//
-//		sprintf(MonitorTset,"The flag is %d\n\r",sensor1_flag);
-//		HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//
-//		vTaskDelay(500);
-//
-//	}
-//}
 
 /* USER CODE END 4 */
 
