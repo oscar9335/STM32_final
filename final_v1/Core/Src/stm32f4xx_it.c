@@ -145,10 +145,10 @@ void UsageFault_Handler(void)
 //void SVC_Handler(void)
 //{
 //  /* USER CODE BEGIN SVCall_IRQn 0 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END SVCall_IRQn 0 */
 //  /* USER CODE BEGIN SVCall_IRQn 1 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END SVCall_IRQn 1 */
 //}
 
@@ -171,10 +171,10 @@ void DebugMon_Handler(void)
 //void PendSV_Handler(void)
 //{
 //  /* USER CODE BEGIN PendSV_IRQn 0 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END PendSV_IRQn 0 */
 //  /* USER CODE BEGIN PendSV_IRQn 1 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END PendSV_IRQn 1 */
 //}
 
@@ -184,11 +184,11 @@ void DebugMon_Handler(void)
 //void SysTick_Handler(void)
 //{
 //  /* USER CODE BEGIN SysTick_IRQn 0 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END SysTick_IRQn 0 */
 //
 //  /* USER CODE BEGIN SysTick_IRQn 1 */
-//////////////////////////
+////////////////////////////
 //  /* USER CODE END SysTick_IRQn 1 */
 //}
 
@@ -205,56 +205,56 @@ void DebugMon_Handler(void)
 //void EXTI0_IRQHandler(void)
 //{
 //  /* USER CODE BEGIN EXTI0_IRQn 0 */
-//
+////
 //  /* USER CODE END EXTI0_IRQn 0 */
 //  HAL_GPIO_EXTI_IRQHandler(livingroom_in_Pin);
 //  /* USER CODE BEGIN EXTI0_IRQn 1 */
-//
+////
 //  /* USER CODE END EXTI0_IRQn 1 */
 //}
-//
-///**
-//  * @brief This function handles EXTI line1 interrupt.
-//  */
+
+/**
+  * @brief This function handles EXTI line1 interrupt.
+  */
 //void EXTI1_IRQHandler(void)
 //{
 //  /* USER CODE BEGIN EXTI1_IRQn 0 */
-//
+////
 //  /* USER CODE END EXTI1_IRQn 0 */
 //  HAL_GPIO_EXTI_IRQHandler(bedroom_out_Pin);
 //  /* USER CODE BEGIN EXTI1_IRQn 1 */
-//
+////
 //  /* USER CODE END EXTI1_IRQn 1 */
 //}
-//
-///**
-//  * @brief This function handles EXTI line2 interrupt.
-//  */
+
+/**
+  * @brief This function handles EXTI line2 interrupt.
+  */
 //void EXTI2_IRQHandler(void)
 //{
 //  /* USER CODE BEGIN EXTI2_IRQn 0 */
-//
+////
 //  /* USER CODE END EXTI2_IRQn 0 */
 //  HAL_GPIO_EXTI_IRQHandler(bedroom_in_Pin);
 //  /* USER CODE BEGIN EXTI2_IRQn 1 */
-//
-//  // Clear the EXTI line 0 pending interrupt flag
-////  __HAL_GPIO_EXTI_CLEAR_IT(bedroom_in_Pin);
-//
+////
+////  // Clear the EXTI line 0 pending interrupt flag
+//////  __HAL_GPIO_EXTI_CLEAR_IT(bedroom_in_Pin);
+////
 //  /* USER CODE END EXTI2_IRQn 1 */
 //}
-//
-///**
-//  * @brief This function handles EXTI line3 interrupt.
-//  */
+
+/**
+  * @brief This function handles EXTI line3 interrupt.
+  */
 //void EXTI3_IRQHandler(void)
 //{
 //  /* USER CODE BEGIN EXTI3_IRQn 0 */
-//
+////
 //  /* USER CODE END EXTI3_IRQn 0 */
 //  HAL_GPIO_EXTI_IRQHandler(livingroom_out_Pin);
 //  /* USER CODE BEGIN EXTI3_IRQn 1 */
-//
+////
 //  /* USER CODE END EXTI3_IRQn 1 */
 //}
 

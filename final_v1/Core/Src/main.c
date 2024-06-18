@@ -173,7 +173,7 @@ int main(void)
 //  xTaskCreate(Sensor_bedroom_out,"Sensor_bedroom_out",128,NULL,3,&xHandle);
 //  xTaskCreate(Sensor_livingroom_in,"Sensor_livingroom_in",128,NULL,3,&xHandle);
 //  xTaskCreate(Sensor_livingroom_out,"Sensor_livingroom_out",128,NULL,3,&xHandle);
-//  xSemaphore = xSemaphoreCreateBinary();
+  xSemaphore = xSemaphoreCreateBinary();
 
   xTaskCreate(LED_task,"LED_task",128,NULL,1,&xHandle);
 
@@ -395,16 +395,16 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
 }
@@ -519,10 +519,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 		livingroom_out = 0;
 	}
 
+
+	xSemaphoreGiveFromISR(xSemaphore,&taskwoken);
 }
 
 void LED_task ( void ){
-	xSemaphore = xSemaphoreCreateBinary();
+
 
 	for(;;){
 		if(counter_bed > 0){
@@ -536,8 +538,8 @@ void LED_task ( void ){
 		memset(MonitorTset,'\0',sizeof(MonitorTset));
 
 
-//		if( xSemaphore != NULL ){
-//			if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10  ) == pdTRUE ){
+		if( xSemaphore != NULL ){
+			if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10  ) == pdTRUE ){
 
 				sprintf(MonitorTset,"bedroom_state %d %d %d %d\n\r",bedroom_state[0],bedroom_state[1],bedroom_state[2],bedroom_state[3]);
 				HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
@@ -628,13 +630,14 @@ void LED_task ( void ){
 
 				sprintf(MonitorTset,"\n\r");
 				HAL_UART_Transmit(&huart2,(uint8_t *)MonitorTset,strlen(MonitorTset),0xffff);
-//			}
-//		}
+			}
+		}
 
 		vTaskDelay(500);
-//		xSemaphoreGive( xSemaphore );
+		xSemaphoreGive( xSemaphore );
 	}
 }
+
 
 /* USER CODE END 4 */
 
